@@ -37,7 +37,6 @@
                         {% for comment in post.comments.all %}
                         <li class="comment-list__comment">
                             <a href="{% url 'user_detail' comment.user.pk%}" class="user">
-                                <img style="height: 20px; width: 20px" src="/{{ comment.user.profile_pic.url }}">
                                 {{ comment.user.username }}:
                             </a>
                             <span class="comment">{{ comment.comment }}</span>

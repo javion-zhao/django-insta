@@ -100,9 +100,9 @@ function create_comment(success_cb, error_cb) {
 function comment_update_view(data) {
     console.log(data);
     var $post = $('.hidden-data.' + data.post_pk);
-    var commentHTML = '<li class="comment-list__comment"><a class="user"> ' + data.commenter_info.username + '</a> <span class="comment">'
+    var commentHTML = '<li class="comment-list__comment"><a class="user"> ' + data.commenter_info.username + '</a> :<span class="comment">'
                     + data.commenter_info.comment_text +'</span></li>'
-  
+    alert(commentHTML)
     $post.closest('.view-update').find('.comment-list').append(commentHTML);
   }
   

@@ -27,7 +27,7 @@ urlpatterns = [
     path('post/delete/<int:pk>/', PostDeleteView.as_view(), name='post_delete'),
     path('like', addLike , name='addlike'),
     path('user/<int:pk>/',UserDetailView.as_view(),name='user_detail'),
-    path('comment/<int:pk>/',addComment,name='addcomment'),
+    path('comment',addComment,name='addcomment'),
     path('togglefollow', toggleFollow, name='togglefollow'),
     path('edit_user/<int:pk>/', EditProfile.as_view(), name='edit_profile'),
 ]

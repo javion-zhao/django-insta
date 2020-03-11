@@ -12,13 +12,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class HelloWorld(TemplateView):
     template_name = 'test.html'
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = "home.html"
+    login_url = "login"
 
-class PostDetailView(DetailView):
+    def get_queryset(self):
+        current_user = self.request.user
+        following = set()
+        for conn in UserConnection.objects.filter(creator=current_user).select_related('following'):
+            following.add(conn.following)
+        return Post.objects.filter(author__in=following)
+
+
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
     template_name = "post_detail.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        liked = Like.objects.filter(post=self.kwargs.get('pk'), user=self.request.user).first()
+        if liked:
+            data['liked'] = 1
+        else:
+            data['liked'] = 0
+        return data
+
 
 class PostCreatView( LoginRequiredMixin , CreateView):
     model = Post
